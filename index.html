@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รักเค้าไหม? 💕</title>
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- Particles.js for background effects -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Confetti.js for celebration effect -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Lao', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Particles background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* พื้นหลังหัวใจลอย */
+        .heart-bg {
+            position: absolute;
+            font-size: 30px;
+            animation: float 6s infinite ease-in-out;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .container {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+            z-index: 10;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .emoji {
+            font-size: 100px;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        h1 {
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-size: 32px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            position: relative;
+            min-height: 140px;
+        }
+
+        button {
+            padding: 15px 45px;
+            font-size: 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-family: 'Noto Sans Lao', sans-serif;
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.5);
+        }
+
+        #noBtn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        #noBtn:hover {
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6);
+        }
+
+        #noBtn:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6);
+        }
+
+        /* หน้าจอสำเร็จ */
+        .success {
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .success h1 {
+            color: #f5576c;
+            font-size: 40px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(245, 87, 108, 0.3);
+        }
+
+        .success .emoji {
+            font-size: 120px;
+        }
+
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--x), var(--y)) scale(0);
+            }
+        }
+
+        .shake {
+            animation: shake 0.3s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            33% { transform: translateX(-5px); }
+            66% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles.js background -->
+    <div id="particles-js"></div>
+
+    <!-- หัวใจพื้นหลัง -->
+    <div class="heart-bg animate__animated animate__fadeIn" style="left: 10%; top: 20%;">💖</div>
+    <div class="heart-bg animate__animated animate__fadeIn" style="left: 80%; top: 30%; animation-delay: 1s;">💕</div>
+    <div class="heart-bg animate__animated animate__fadeIn" style="left: 15%; top: 70%; animation-delay: 2s;">💗</div>
+    <div class="heart-bg animate__animated animate__fadeIn" style="left: 85%; top: 60%; animation-delay: 1.5s;">💝</div>
+    <div class="heart-bg animate__animated animate__fadeIn" style="left: 50%; top: 10%; animation-delay: 0.5s;">💘</div>
+
+    <div class="container animate__animated animate__bounceIn" id="question">
+        <div class="emoji">🥺</div>
+        <h1>รักเค้าไหม?</h1>
+        <p>บอกมาเลยนะ...ใจเต้นมากเลย 💓</p>
+        <div class="button-container">
+            <button id="yesBtn">รัก 💖</button>
+            <button id="noBtn">ไม่รัก</button>
+        </div>
+    </div>
+
+    <div class="container success" id="success">
+        <div class="emoji">🎉</div>
+        <h1>ຍິນດີດ້ວຍ! 💕</h1>
+        <p>ຮູ້ແລ້ວວ່າຮັກກັນ! 🥰<br>ຮັກໜຶ່ງຫຼາຍໆ ເລີຍນາ! 💗💗💗</p>
+        <div class="emoji">😘</div>
+    </div>
+
+    <script>
+        // Initialize Particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 50, density: { enable: true, value_area: 800 } },
+                color: { value: ['#ff69b4', '#ffb6c1'] },
+                shape: { type: 'circle' },
+                opacity: { value: 0.4, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: false },
+                move: {
+                    enable: true,
+                    speed: 1.5,
+                    direction: 'top',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out'
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'bubble' },
+                    resize: true
+                },
+                modes: {
+                    bubble: { distance: 100, size: 5, duration: 2, opacity: 0.6 }
+                }
+            },
+            retina_detect: true
+        });
+
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const questionDiv = document.getElementById('question');
+        const successDiv = document.getElementById('success');
+        let noBtnSize = 1;
+        let isMoving = false;
+
+        // ฟังก์ชันสร้างตำแหน่งสุ่มสำหรับปุ่ม No
+        function moveButton() {
+            if (isMoving) return;
+            isMoving = true;
+
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const yesBtnRect = yesBtn.getBoundingClientRect();
+            const noBtnRect = noBtn.getBoundingClientRect();
+
+            let randomX, randomY;
+            let attempts = 0;
+            let isValidPosition = false;
+
+            // หลังจากครั้งแรก ให้ปุ่มเป็น absolute เพื่อให้เคลื่อนที่ได้อย่างอิสระ
+            noBtn.style.position = 'absolute';
+
+            // พยายามหาตำแหน่งที่ไม่ทับกับปุ่ม "รัก"
+            while (!isValidPosition && attempts < 30) {
+                // สุ่มตำแหน่งใหม่ในพื้นที่ container
+                randomX = (Math.random() - 0.5) * (containerRect.width - 200);
+                randomY = (Math.random() - 0.5) * (containerRect.height - 250) + 50;
+
+                // คำนวณตำแหน่งจริงของปุ่ม No ที่จะย้ายไป
+                const currentLeft = noBtnRect.left + noBtnRect.width / 2 - containerRect.left - containerRect.width / 2;
+                const currentTop = noBtnRect.top + noBtnRect.height / 2 - containerRect.top - containerRect.height / 2;
+                
+                const newNoBtnCenterX = currentLeft + randomX;
+                const newNoBtnCenterY = currentTop + randomY;
+                
+                const yesBtnCenterX = yesBtnRect.left + yesBtnRect.width / 2 - containerRect.left - containerRect.width / 2;
+                const yesBtnCenterY = yesBtnRect.top + yesBtnRect.height / 2 - containerRect.top - containerRect.height / 2;
+
+                // ตรวจสอบระยะห่างระหว่างศูนย์กลางของปุ่มทั้งสอง
+                const distance = Math.sqrt(
+                    Math.pow(newNoBtnCenterX - yesBtnCenterX, 2) + 
+                    Math.pow(newNoBtnCenterY - yesBtnCenterY, 2)
+                );
+
+                // ถ้าระยะห่างมากกว่า 100px ถือว่าไม่ทับกัน
+                if (distance > 100) {
+                    isValidPosition = true;
+                }
+                attempts++;
+            }
+
+            noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+            setTimeout(() => {
+                isMoving = false;
+            }, 300);
+        }
+
+        // เมื่อเมาส์เข้าใกล้ปุ่ม No
+        noBtn.addEventListener('mouseenter', moveButton);
+        noBtn.addEventListener('touchstart', moveButton);
+
+        // เมื่อคลิกปุ่ม No (สำหรับมือถือ)
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        // ฟังก์ชันสร้างดอกไม้ไฟ
+        function createFireworks() {
+            // Use confetti.js for better fireworks
+            const duration = 2000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff69b4', '#ff1493', '#ffd700']
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff69b4', '#ffb6c1', '#ffd700']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+
+            // Additional celebration burst
+            setTimeout(() => {
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.6 },
+                    colors: ['#ff69b4', '#ff1493', '#ffd700', '#ffb6c1']
+                });
+            }, 300);
+        }
+
+        // เมื่อคลิกปุ่ม Yes
+        yesBtn.addEventListener('click', () => {
+            questionDiv.classList.add('animate__animated', 'animate__zoomOut');
+            setTimeout(() => {
+                questionDiv.style.display = 'none';
+                successDiv.style.display = 'block';
+                successDiv.classList.add('animate__animated', 'animate__bounceIn');
+                createFireworks();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
